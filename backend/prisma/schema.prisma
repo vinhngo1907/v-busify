@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider      = "prisma-client-js"
+    binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x", "linux-musl", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Users {
+    id        Int       @id @default(autoincrement())
+    email     String?   @unique()
+    name      String
+    role      String    @default("user")
+    created   DateTime?
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+}
+
+model Bus {
+    number       String     @id
+    capacity     Int
+    contractor   Contractor @relation(fields: [contractorId], references: [id])
+    contractorId String
+    Conductor    Conductor? @relation(fields: [conductorId], references: [id])
+    conductorId  String
+    schedule     Schedue[]
+}
+
+model Schedue {
+    id            Int      @id @default(autoincrement())
+    busNumber     String
+    bus           Bus      @relation(fields: [busNumber], references: [number])
+    checkpoints   String[]
+    from          String
+    to            String
+    departureTime String[]
+    days          String[]
+    ticketPrice   Int
+}
+
+model Conductor {
+    id    String @id
+    name  String
+    phone String
+    Bus   Bus[]
+}
+
+model Contractor {
+    id      String @id
+    name    String
+    email   String @unique
+    phone   String
+    Bus     Bus[]
+    address String
+}
