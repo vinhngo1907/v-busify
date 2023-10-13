@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, Query, UseGuards, OnModuleInit } from '@nestjs/common';
 import { UserService } from './user.service';
 import { pipe, switchMap, of } from 'rxjs';
-import { AuthGuard } from 'src/shared/auth.guard';
+import { AuthGuard } from 'src/redis/redis.module';
 import { ClientProxy, EventPattern } from '@nestjs/microservices';
 import { DatabaseService } from 'src/database/database.service';
 import { HttpService } from '@nestjs/axios';

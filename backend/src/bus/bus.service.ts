@@ -4,13 +4,13 @@ import { DatabaseService } from 'src/database/database.service';
 // import { KafkaService } from 'src/kafka/kafka.service';
 
 @Injectable()
-export class ProductService implements OnModuleInit{
+export class BusService implements OnModuleInit{
     private loggerService: Logger
     constructor(
         private databaseService: DatabaseService,
         // private kafkaService: KafkaService
     ) {
-        this.loggerService = new Logger(ProductService.name);
+        this.loggerService = new Logger(BusService.name);
     }
 
     async onModuleInit() {

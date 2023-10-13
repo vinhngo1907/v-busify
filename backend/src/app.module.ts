@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
-import { ProductModule } from './product/product.module';
+import { BusModule } from './bus/bus.module';
 import { DatabaseModule } from './database/database.module';
 import { KafkaService } from './kafka/kafka.service';
 import { KafkaModule } from './kafka/kafka.module';
@@ -9,16 +9,17 @@ import { AppConfigService } from './config/appConfigService';
 import { ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [UserModule, ProductModule, 
-    // DatabaseModule, 
-    // KafkaModule
-  ],
-  controllers: [],
-  providers: [
-    // KafkaService, 
-    DatabaseService,
-    ConfigService,
-    AppConfigService
-  ],
+	imports: [
+		UserModule, BusModule,
+		// DatabaseModule, 
+		// KafkaModule
+	],
+	controllers: [],
+	providers: [
+		// KafkaService, 
+		DatabaseService,
+		ConfigService,
+		AppConfigService
+	],
 })
-export class AppModule {}
+export class AppModule { }
