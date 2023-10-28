@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, Query, UseGuards, OnModuleInit } from '@nestjs/common';
-import { UserService } from './user.service';
+import { UserService } from './auth.service';
 import { pipe, switchMap, of } from 'rxjs';
-import { AuthGuard } from 'src/redis/redis.module';
+// import { AuthGuard } from 'src/redis/redis.module';
 import { ClientProxy, EventPattern } from '@nestjs/microservices';
 import { DatabaseService } from 'src/database/database.service';
 import { HttpService } from '@nestjs/axios';
@@ -15,7 +15,7 @@ export class UserController {
     ) { }
     
     @Get()
-    @UseGuards(new AuthGuard())
+    // @UseGuards(new AuthGuard())
     showAllUser(
         @Query('page') page: number = 1,
         @Query('limit') limit: number = 10,
@@ -23,14 +23,14 @@ export class UserController {
         @Query('order_by') order_by: string = 'desc',
     ) {
         try {
-            return (this.userService.showAllUser(page, limit, status, order_by)).pipe(
-                switchMap(data => {
-                    return of({
-                        msg: "Successfully",
-                        data: data
-                    })
-                })
-            )
+            // return (this.userService.showAllUser(page, limit, status, order_by)).pipe(
+            //     switchMap(data => {
+            //         return of({
+            //             msg: "Successfully",
+            //             data: data
+            //         })
+            //     })
+            // )
         } catch (err: any) {
             throw err;
         }

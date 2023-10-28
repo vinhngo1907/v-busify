@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from './user/user.module';
+// import { UserModule } from './user/user.module';
 import { BusModule } from './bus/bus.module';
 import { DatabaseModule } from './database/database.module';
 import { KafkaService } from './kafka/kafka.service';
@@ -10,7 +10,8 @@ import { ConfigService } from '@nestjs/config';
 
 @Module({
 	imports: [
-		UserModule, BusModule,
+		// UserModule, 
+		BusModule,
 		// DatabaseModule, 
 		// KafkaModule
 	],
