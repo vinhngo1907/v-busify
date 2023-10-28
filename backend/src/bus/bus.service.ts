@@ -5,7 +5,7 @@ import { BusDTO } from './dto';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
-export class BusService implements OnModuleInit {
+export class BusService {
     private readonly logger: Logger = new Logger(BusService.name);
     constructor(private databaseService: DatabaseService,) { }
 

@@ -11,13 +11,19 @@ export class BusDTO {
 
     @IsString()
     @IsNotEmpty()
-    constructorId: string;
+    contractorId: string;
 
     @IsString()
     @IsNotEmpty()
     conductorId: string;
 
+    // @IsString()
+    // @IsNotEmpty()
+    // busNumber: string;
+}
+
+export class BusCreateDTO {
     @IsString()
-    @IsNotEmpty()
-    busNumber: string;
+    @IsNotEmpty({ message: 'Bus number is required' })
+    number: string;
 }
