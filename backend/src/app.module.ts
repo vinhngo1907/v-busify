@@ -23,4 +23,5 @@ import { ConfigService } from '@nestjs/config';
 		AppConfigService
 	],
 })
-export class AppModule { }
+
+export class AppModule {}

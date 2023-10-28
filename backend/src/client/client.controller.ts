@@ -16,14 +16,15 @@ export class ClientController {
         @Query('order_by') order_by: string = 'asc'
     ) {
         try {
-            return (this.clientService.all(page, limit, order_by)).pipe(
-                switchMap(data => {
-                    return of({
-                        msg: "Successfully",
-                        data: data
-                    })
-                })
-            )
+            return [];
+            // return (this.clientService.all(page, limit, order_by)).pipe(
+            //     switchMap(data => {
+            //         return of({
+            //             msg: "Successfully",
+            //             data: data
+            //         })
+            //     })
+            // )
         } catch (err: any) {
             throw err;
         }
@@ -34,14 +35,15 @@ export class ClientController {
         @Body() ResponseBody: ClientDTO
     ) {
         try {
-            return (await this.clientService.create(ResponseBody)).pipe(
-                map(data => {
-                    return {
-                        data: data,
-                        msg: 'Create buy transaction successfully',
-                    }
-                })
-            )
+            return {};
+            // return (await this.clientService.create(ResponseBody)).pipe(
+            //     map(data => {
+            //         return {
+            //             data: data,
+            //             msg: 'Create buy transaction successfully',
+            //         }
+            //     })
+            // )
         } catch (err: any) {
             console.log(err);
             throw err;
@@ -53,14 +55,15 @@ export class ClientController {
         @Param() id: number
     ) {
         try {
-            return (await this.clientService.getSingleClient(id)).pipe(
-                map(data => {
-                    return of({
-                        data: data,
-                        msg: "Successfully"
-                    })
-                })
-            )
+            return [];
+            // return (await this.clientService.getSingleClient(id)).pipe(
+            //     map(data => {
+            //         return of({
+            //             data: data,
+            //             msg: "Successfully"
+            //         })
+            //     })
+            // )
         } catch (err) {
             console.log(err);
             throw err;
@@ -73,14 +76,15 @@ export class ClientController {
         @Body() responseBody: ClientDTO
     ) {
         try {
-            return (await this.clientService.update(id, responseBody)).pipe(
-                map(data => {
-                    return of({
-                        data: data,
-                        msg: 'Updated client in successfully'
-                    })
-                })
-            )
+            return {};
+            // return (await this.clientService.update(id, responseBody)).pipe(
+            //     map(data => {
+            //         return of({
+            //             data: data,
+            //             msg: 'Updated client in successfully'
+            //         })
+            //     })
+            // )
         } catch (err: any) {
             console.log(err);
             throw err;
