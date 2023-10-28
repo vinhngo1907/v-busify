@@ -12,27 +12,13 @@ export class BusController {
     constructor(
         private readonly busService: BusService
     ) { }
-    @Get()
+    @Get('schedule')
     getBusSchedule(
         @Query('page') page: number = 1,
         @Query('limit') limit: number = 10,
         @Query('page') order_by: string = 'desc',
     ) {
-        return [];
-        // this.client.emit('hello','Hello from RabbitMQ')
-        // return this.productService.all();
-        // return (this.busService.all(page, limit, order_by)).pipe(
-        //     switchMap(data => {
-        //         return of({
-        //             msg: 'Successfully',
-        //             data: data
-        //         })
-        //     })
-        // )
-    }
-    @Get('schedule')
-    async getBusSchedule() {
-        return this.busService.getBusSchedule();
+        return this.busService.findBusSchedule(page, limit, order_by);
     }
     @Post('bus')
     async createBus(@Body() bus: BusDTO) {
