@@ -28,7 +28,12 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
     async close() {
         await this.$disconnect();
     }
-
+    async cleanDatabse(){
+        if(process.env.NODE_ENV !== 'test') return;
+        const models = Reflect.ownKeys(this).filter(key => key[0] !== "_");
+        return Promise.all(models.map((modelKey) => this[modelKey].deleteMany()));
+    }
+    
     // async dropDatabase() {
     //     if (process.env.NODE_ENV === 'production') {
     //         throw new Error('Cannot drop database in production');

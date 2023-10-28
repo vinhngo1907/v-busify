@@ -28,10 +28,10 @@ model Bus {
     contractorId String
     Conductor    Conductor? @relation(fields: [conductorId], references: [id])
     conductorId  String
-    schedule     Schedue[]
+    schedule     Schedule[]
 }
 
-model Schedue {
+model Schedule {
     id            Int      @id @default(autoincrement())
     busNumber     String
     bus           Bus      @relation(fields: [busNumber], references: [number])

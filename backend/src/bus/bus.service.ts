@@ -1,45 +1,45 @@
 import { HttpException, HttpStatus, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { from, of } from 'rxjs';
 import { DatabaseService } from 'src/database/database.service';
+import { BusDTO } from './dto';
 // import { KafkaService } from 'src/kafka/kafka.service';
 
 @Injectable()
-export class BusService implements OnModuleInit{
-    private loggerService: Logger
+export class BusService implements OnModuleInit {
+    private readonly logger: Logger = new Logger(BusService.name);
     constructor(
         private databaseService: DatabaseService,
         // private kafkaService: KafkaService
-    ) {
-        this.loggerService = new Logger(BusService.name);
-    }
+    ) { }
 
-    async onModuleInit() {
-        // const consumerawait this.kafkaService.GetUser()
-    }
-
-    all(page: number = 1, limit: number = 10, order_by: string = 'desc') {
-        if (Number(limit) < 0 || Number(page) < 1) {
-            throw new HttpException(
-                'Limit or page is invalid',
-                HttpStatus.BAD_REQUEST,
-            );
+    async findBusSchedule(page: number = 1, limit: number = 10, order_by: string = 'desc') {
+        return {
+            today: new Date(),
+            schedule: await this.databaseService.bus.findMany({})
         }
-        return from(this.databaseService.product.findMany({
-            where: {},
-            take: Number(limit),
-            skip: (Number(page) - 1) * Number(limit),
-            orderBy: {
-                id: order_by === 'desc' ? 'desc' : 'asc',
-            },
-        }))
     }
 
-    async create(data: {
-        title: string, image: string
-    }) {
-        const newProduct = await this.databaseService.product.create({
-            data: { ...data, likes: 0 }
-        });
+    async createBus(bus: BusDTO) {
+        try {
+            const busData = await this.databaseService.bus.findFirst({
+                where: { number: bus.number }
+            });
+
+            if (busData) {
+                throw new HttpException('Bus already exist', 400);
+            }
+
+            return this.databaseService.bus.create({
+                data: {
+                    ...bus,
+                },
+            });
+        } catch (error) {
+
+        }
+        // const newProduct = await this.databaseService.product.create({
+        //     data: { ...data, likes: 0 }
+        // });
         // await this.kafkaService.SendMessage('product_created', {
         //     // type: 'sub',
         //     id: newProduct.id,
@@ -51,16 +51,14 @@ export class BusService implements OnModuleInit{
         //     ]
         // });
 
-        return of({
-            product: newProduct
-        })
+        return {}
     }
 
     async get(id: number) {
         try {
             const product = await this.databaseService.product.findUnique({ where: { id: Number(id) } });
             if (!product) {
-                throw new HttpException('This product does not exist!',HttpStatus.BAD_REQUEST);
+                throw new HttpException('This product does not exist!', HttpStatus.BAD_REQUEST);
             }
             return of({
                 product

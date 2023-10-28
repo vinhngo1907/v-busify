@@ -13,16 +13,17 @@ export class BusController {
         @Query('limit') limit: number = 10,
         @Query('page') order_by: string = 'desc',
     ) {
+        return [];
         // this.client.emit('hello','Hello from RabbitMQ')
         // return this.productService.all();
-        return (this.busService.all(page, limit, order_by)).pipe(
-            switchMap(data => {
-                return of({
-                    msg: 'Successfully',
-                    data: data
-                })
-            })
-        )
+        // return (this.busService.all(page, limit, order_by)).pipe(
+        //     switchMap(data => {
+        //         return of({
+        //             msg: 'Successfully',
+        //             data: data
+        //         })
+        //     })
+        // )
     }
     // @Get(':id')
     // async get(@Param('id') id: number) {
