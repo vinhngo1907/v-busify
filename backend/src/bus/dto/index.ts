@@ -2,8 +2,8 @@ import { IsInt, IsNotEmpty, IsString } from "class-validator";
 
 export class BusDTO {
     @IsString()
-    @IsNotEmpty({message: 'Bus number is required'})
-    number: string;  
+    @IsNotEmpty({ message: 'Bus number is required' })
+    number: string;
 
     @IsInt()
     @IsNotEmpty()
@@ -11,13 +11,13 @@ export class BusDTO {
 
     @IsString()
     @IsNotEmpty()
-    constructorId: string;    
-    
+    constructorId: string;
+
     @IsString()
     @IsNotEmpty()
-    conductorId: string;    
-    
+    conductorId: string;
+
     @IsString()
     @IsNotEmpty()
-    busNumber: string;    
+    busNumber: string;
 }

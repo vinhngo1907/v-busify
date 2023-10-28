@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable, Logger, OnModuleInit } from '@ne
 import { from, of } from 'rxjs';
 import { DatabaseService } from 'src/database/database.service';
 import { BusDTO } from './dto';
-// import { KafkaService } from 'src/kafka/kafka.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class BusService implements OnModuleInit {
@@ -34,62 +34,27 @@ export class BusService implements OnModuleInit {
                     ...bus,
                 },
             });
-        } catch (error) {
-
+        } catch (error: any) {
+            throw new HttpException(error.message, error.status);
         }
-        // const newProduct = await this.databaseService.product.create({
-        //     data: { ...data, likes: 0 }
-        // });
-        // await this.kafkaService.SendMessage('product_created', {
-        //     // type: 'sub',
-        //     id: newProduct.id,
-        //     step_count: 0,
-        //     status: "created product",
-        //     statusToUpdated: JSON.stringify(newProduct),
-        //     steps: [
-        //         'product_created'
-        //     ]
-        // });
-
-        return {}
     }
 
-    async get(id: number) {
+    async getConductors() {
         try {
-            const product = await this.databaseService.product.findUnique({ where: { id: Number(id) } });
-            if (!product) {
-                throw new HttpException('This product does not exist!', HttpStatus.BAD_REQUEST);
-            }
-            return of({
-                product
-            })
-        } catch (err: any) {
-            console.log(err);
-            throw err
+            return this.databaseService.conductor.findMany({});
+        } catch (error: any) {
+            throw new HttpException(error.message, error.status);
         }
     }
 
-    async update(id: number, data): Promise<any> {
-        try {
-            const updatedProduct = await this.databaseService.product.update({
-                where: {
-                    id: Number(id)
-                },
-                data: {
-                    ...data
-                }
-            });
-            if (!updatedProduct) {
-                throw new HttpException('This product does not exist!', HttpStatus.BAD_REQUEST);
-            }
-            return of({
-                product: updatedProduct
-            })
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
-    }
+    async createContractor(contractor: any) {
+        return this.databaseService.contractor.create({
+          data: {
+            ...contractor,
+            id: uuidv4(),
+          },
+        });
+      }
 
     async delete(id: number): Promise<any> {
         try {
