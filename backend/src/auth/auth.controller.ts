@@ -1,16 +1,15 @@
 import { Controller, Get, Inject, Query, UseGuards, OnModuleInit } from '@nestjs/common';
-import { UserService } from './auth.service';
 import { pipe, switchMap, of } from 'rxjs';
 // import { AuthGuard } from 'src/redis/redis.module';
 import { ClientProxy, EventPattern } from '@nestjs/microservices';
 import { DatabaseService } from 'src/database/database.service';
 import { HttpService } from '@nestjs/axios';
-import { KafkaService } from 'src/kafka/kafka.service';
 import { Logger } from 'kafkajs';
+import { AuthService } from './auth.service';
 
-@Controller('user')
-export class UserController {
-    constructor(private userService: UserService,
+@Controller('auth')
+export class AuthController {
+    constructor(private userService: AuthService,
         // @Inject('CLIENT_SERVICE') private readonly client: ClientProxy
     ) { }
     
@@ -23,14 +22,7 @@ export class UserController {
         @Query('order_by') order_by: string = 'desc',
     ) {
         try {
-            // return (this.userService.showAllUser(page, limit, status, order_by)).pipe(
-            //     switchMap(data => {
-            //         return of({
-            //             msg: "Successfully",
-            //             data: data
-            //         })
-            //     })
-            // )
+           return [];
         } catch (err: any) {
             throw err;
         }
