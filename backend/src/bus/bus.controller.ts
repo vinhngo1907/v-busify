@@ -1,4 +1,8 @@
-import { Controller, Get, Post, Delete, Put, Patch, Body, Query, Param } from '@nestjs/common';
+import { 
+    Controller,
+    Get, Post, Delete, Put, Patch, Body, Query, Param, 
+    HttpException 
+} from '@nestjs/common';
 import { BusService } from './bus.service';
 import { map, of, switchMap } from 'rxjs';
 import { BusDTO } from './dto';
@@ -33,9 +37,11 @@ export class BusController {
     @Post('bus')
     async createBus(@Body() bus: BusDTO) {
        try {
-            return this.busService.createBus()
+            return this.busService.createBus(bus);
        } catch (error) {
-        
+        if (error instanceof HttpException) {
+            throw new HttpException(error.message, error.getStatus());
+          }
        }
     }
     // @Put('/:id')
