@@ -1,14 +1,15 @@
 import { Controller, Get, Post, Delete, Put, Patch, Body, Query, Param } from '@nestjs/common';
 import { BusService } from './bus.service';
 import { map, of, switchMap } from 'rxjs';
+import { BusDTO } from './dto';
 
 @Controller('bus')
 export class BusController {
     constructor(
-        private busService: BusService
+        private readonly busService: BusService
     ) { }
     @Get()
-    all(
+    getBusSchedule(
         @Query('page') page: number = 1,
         @Query('limit') limit: number = 10,
         @Query('page') order_by: string = 'desc',
@@ -29,19 +30,14 @@ export class BusController {
     // async get(@Param('id') id: number) {
     //     return this.productService.get(id)
     // }
-    // @Post()
-    // async create(@Body('title') title: string, @Body('image') image: string) {
-    //     // const product = await this.productService.create({ title, image })
-    //     // this.client.emit('product_created', product)
-    //     return (await this.productService.create({ title, image })).pipe(
-    //         map(data => {
-    //             return of({
-    //                 msg: "Created product in successfully",
-    //                 data: data
-    //             });
-    //         })
-    //     );
-    // }
+    @Post('bus')
+    async createBus(@Body() bus: BusDTO) {
+       try {
+            return this.busService.createBus()
+       } catch (error) {
+        
+       }
+    }
     // @Put('/:id')
     // async update(
     //     @Param('id') id: number,

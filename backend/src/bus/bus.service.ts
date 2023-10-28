@@ -7,10 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export class BusService implements OnModuleInit {
     private readonly logger: Logger = new Logger(BusService.name);
-    constructor(
-        private databaseService: DatabaseService,
-        // private kafkaService: KafkaService
-    ) { }
+    constructor(private databaseService: DatabaseService,) { }
 
     async findBusSchedule(page: number = 1, limit: number = 10, order_by: string = 'desc') {
         return {
@@ -49,26 +46,26 @@ export class BusService implements OnModuleInit {
 
     async createContractor(contractor: any) {
         return this.databaseService.contractor.create({
-          data: {
-            ...contractor,
-            id: uuidv4(),
-          },
+            data: {
+                ...contractor,
+                id: uuidv4(),
+            },
         });
-      }
+    }
 
-    async delete(id: number): Promise<any> {
+    async removeConductor(conductorId: string) {
         try {
-            const deletedProduct = await this.databaseService.product.delete({ where: { id: Number(id) } });
-            if (!deletedProduct) {
-                throw new HttpException('This product does not exist!', HttpStatus.BAD_REQUEST);
-            }
-            return of({
-                product: deletedProduct
-            })
+            return this.databaseService.conductor.delete({
+                where: {
+                    id: conductorId
+                }
+            });
         } catch (error) {
             console.log(error);
             throw error;
         }
 
     }
+
+    async getBookedTickets() {}
 }
