@@ -30,10 +30,10 @@ export class BusController {
         //     })
         // )
     }
-    // @Get(':id')
-    // async get(@Param('id') id: number) {
-    //     return this.productService.get(id)
-    // }
+    @Get('schedule')
+    async getBusSchedule() {
+        return this.busService.getBusSchedule();
+    }
     @Post('bus')
     async createBus(@Body() bus: BusDTO) {
        try {
