@@ -4,9 +4,15 @@ import { AppModule } from './app.module';
 import { AppConfigService } from './config/appConfigService';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
-  const appConfigService = app.get<AppConfigService>(AppConfigService);
-  await app.listen(appConfigService.port);
+	const app = await NestFactory.create(AppModule);
+	app.useGlobalPipes(new ValidationPipe({
+		transform: true,
+		whitelist: true
+	}
+	));
+
+	// app.useGlobalFilters(new HttpExceptionF)
+	const appConfigService = app.get<AppConfigService>(AppConfigService);
+	await app.listen(appConfigService.port);
 }
 bootstrap();
