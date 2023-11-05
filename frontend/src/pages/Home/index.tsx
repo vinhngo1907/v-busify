@@ -41,4 +41,5 @@ const HeroContainer = styled(Box)({
     marginBottom: '4rem',
     boxShadow: '0px 0px 16px rgba(0, 0, 0, 0.2)',
 });
+
 export default Home;
