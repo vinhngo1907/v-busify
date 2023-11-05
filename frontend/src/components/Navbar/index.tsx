@@ -10,7 +10,9 @@ import {
 	IconButton,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import helpIcon from '../../assets/helpIcon.svg';
 import { useScreen } from '../../customHooks/useScreen';
+import toast, { Toaster } from 'react-hot-toast';
 
 const NavbarContainer = styled(Box)`
     display: flex;
@@ -18,7 +20,7 @@ const NavbarContainer = styled(Box)`
     align-items: center;
 `;
 
-const HelperButton = styled(Box)`
+const HelpButton = styled(Box)`
   align-items: center;
   gap: 5px;
   cursor: pointer;  
@@ -26,6 +28,20 @@ const HelperButton = styled(Box)`
 const LinkContainer = styled(Link)`
   text-decoration: none;
   color: inherit;
+`;
+
+const ManageButton = styled(Box)`
+	display: flex;
+	align-items: center;
+	border-radius: 8px;
+	background-color: #fbbc05;
+	padding: 0.3rem 0.8rem 0.3rem 0.8rem;
+	border: 4px solid #fbbc05;
+	cursor: pointer;
+
+	&:hover {
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+	}
 `;
 
 export default function Navbar() {
@@ -38,8 +54,14 @@ export default function Navbar() {
 					style={{ textDecoration: 'none', color: 'inherit' }}>Busify</LinkContainer>
 			</Typography>
 			<Box sx={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-
+				<HelpButton display={{ xs: 'none', md: 'flex' }}>
+					<img src={helpIcon} alt="help" />
+					<Typography variant="h6" color={theme.palette.common.black}>
+						Help
+					</Typography>
+				</HelpButton>
 			</Box>
+			<Toaster position="top-center" />
 		</NavbarContainer>
 	)
 }

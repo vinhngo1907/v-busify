@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import theme from './theme';
 import Home from './pages/Home';
+import BusSchedule from './pages/BusSchedule';
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 				<Navbar />
 				<Routes>
 					<Route path="/" element={<Home />} />
+					<Route path="/bus-schedule" element={<BusSchedule />} />
 				</Routes>
 				<Footer />
 			</Box>

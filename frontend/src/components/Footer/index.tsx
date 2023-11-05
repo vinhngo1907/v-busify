@@ -23,7 +23,7 @@ export default function Footer() {
                     padding={0}
                 >
                     INDIAN INSTITUTE OF INFORMATION TECHNOLOGY DESIGN AND MANUFACTURING
-                    JABALPUR
+                    KUUKOO
                 </Typography>
             </Grid>
         </Grid>
