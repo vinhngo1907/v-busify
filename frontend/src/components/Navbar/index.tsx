@@ -1,13 +1,13 @@
 import React, { useRef } from 'react';
 import {
-  useTheme,
-  Typography,
-  Box,
-  Button,
-  styled,
-  Menu,
-  MenuItem,
-  IconButton,
+	useTheme,
+	Typography,
+	Box,
+	Button,
+	styled,
+	Menu,
+	MenuItem,
+	IconButton,
 } from '@mui/material';
 import theme from '../../theme';
 import { Link } from 'react-router-dom';
@@ -29,10 +29,10 @@ const LinkContainer = styled(Link)`
 `;
 
 export default function Navbar() {
-  <NavbarContainer>
-    <Typography variant='h1' color={theme.palette.primary.main} fontSize={{ xs: "1.25rem", md: "2.5rem" }}>
-      <LinkContainer to="/"
-        style={{ textDecoration: 'none', color: 'inherit' }}>Busify</LinkContainer>
-    </Typography>
-  </NavbarContainer>
+	<NavbarContainer>
+		<Typography variant='h1' color={theme.palette.primary.main} fontSize={{ xs: "1.25rem", md: "2.5rem" }}>
+			<LinkContainer to="/"
+				style={{ textDecoration: 'none', color: 'inherit' }}>Busify</LinkContainer>
+		</Typography>
+	</NavbarContainer>
 }
