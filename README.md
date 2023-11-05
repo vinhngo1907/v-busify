@@ -13,3 +13,17 @@ The ticket booking system will provide a user-friendly interface where passenger
 - ReactJS
 - TypeScript
 - MUI
+
+## Backend
+
+- NestJS
+- Postgres
+- Redis
+
+# Run Locally
+
+The [Contributing.md](Contributing.md) contains the step-by-step procedure for contributing to this project.
+
+# License
+
+Henry Ngo aka Kuu Koo
