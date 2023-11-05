@@ -1,7 +1,6 @@
-import { Box, Grid, Typography, styled } from "@mui/material";
+import { Box, Grid, Typography, styled, useTheme } from "@mui/material";
 import bgimg from '../../assets/bgimg.png';
 import bus from '../../assets/busIcon.svg';
-import { useTheme } from "@emotion/react";
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
