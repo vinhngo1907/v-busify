@@ -9,8 +9,8 @@ import {
 	MenuItem,
 	IconButton,
 } from '@mui/material';
-import theme from '../../theme';
 import { Link } from 'react-router-dom';
+import { useScreen } from '../../customHooks/useScreen';
 
 const NavbarContainer = styled(Box)`
     display: flex;
@@ -29,10 +29,17 @@ const LinkContainer = styled(Link)`
 `;
 
 export default function Navbar() {
-	<NavbarContainer>
-		<Typography variant='h1' color={theme.palette.primary.main} fontSize={{ xs: "1.25rem", md: "2.5rem" }}>
-			<LinkContainer to="/"
-				style={{ textDecoration: 'none', color: 'inherit' }}>Busify</LinkContainer>
-		</Typography>
-	</NavbarContainer>
+	const currentScreen = useScreen();
+	const theme = useTheme();
+	return (
+		<NavbarContainer>
+			<Typography variant='h1' color={theme.palette.primary.main} fontSize={{ xs: "1.25rem", md: "2.5rem" }}>
+				<LinkContainer to="/"
+					style={{ textDecoration: 'none', color: 'inherit' }}>Busify</LinkContainer>
+			</Typography>
+			<Box sx={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+
+			</Box>
+		</NavbarContainer>
+	)
 }
