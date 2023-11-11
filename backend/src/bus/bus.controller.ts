@@ -1,11 +1,11 @@
-import { 
+import {
     Controller,
-    Get, Post, Delete, Put, Patch, Body, Query, Param, 
-    HttpException 
+    Get, Post, Delete, Put, Patch, Body, Query, Param,
+    HttpException
 } from '@nestjs/common';
 import { BusService } from './bus.service';
 import { map, of, switchMap } from 'rxjs';
-import { BusDTO } from './dto';
+import { BusDTO, ContractorDTO } from './dto';
 
 @Controller('bus')
 export class BusController {
@@ -22,50 +22,40 @@ export class BusController {
     }
     @Post('bus')
     async createBus(@Body() bus: BusDTO) {
-       try {
+        try {
             return this.busService.createBus(bus);
-       } catch (error) {
-        if (error instanceof HttpException) {
-            throw new HttpException(error.message, error.getStatus());
-          }
-       }
+        } catch (error) {
+            if (error instanceof HttpException) {
+                throw new HttpException(error.message, error.getStatus());
+            }
+        }
     }
-    // @Put('/:id')
-    // async update(
-    //     @Param('id') id: number,
-    //     @Body('title') title: string, @Body('image') image: string) {
-    //     // this.client.emit('product_created', product)
-    //     return (await this.productService.update(id, { title, image })).pipe(
-    //         map(data => {
-    //             return of({
-    //                 msg: "Updated product in successfully",
-    //                 data: data
-    //             });
-    //         })
-    //     );
-    // }
-    // @Delete('/:id')
-    // async delete(@Param('id') id: number) {
-    //     // const product = await this.productService.create({ title, image })
-    //     // this.client.emit('product_created', product)
-    //     return (await this.productService.delete(id)).pipe(
-    //         map(data => {
-    //             return of({
-    //                 msg: "Deleted product in successfully",
-    //                 data: data
-    //             });
-    //         })
-    //     );
-    // }
+    @Delete('/:id')
+    async removeContractor(
+        @Param('id') id: string,
+        @Body('title') title: string, @Body('image') image: string) {
 
-    // @Post('/:id/like')
-    // async like(@Param('id') id: number) {
-    //     const product = await this.productService.get(id)
-    //     console.log(product);
+        return await this.busService.reomveContractor(id);
+    }
+    @Delete('/:id')
+    async removeConductor(@Param('id') id: string) {
+        return await this.busService.removeConductor(id);
+    }
 
-    //     return this.productService.update(id, {
-    //         // likes: product.likes + 1
-    //     })
+    @Post('conductor')
+    async createConductor(@Body() conductor: ContractorDTO) {
+        return this.busService.createConductor(conductor);
 
-    // }
+    }
+
+    @Post('contractor')
+    async createContractor(@Body() contractor: ContractorDTO) {
+        try {
+            return this.busService.createContractor(contractor);
+        } catch (error) {
+            if (error instanceof HttpException) {
+                throw new HttpException(error.message, error.getStatus());
+            }
+        }
+    }
 }
