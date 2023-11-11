@@ -46,18 +46,18 @@ export class BusService {
         }
     }
 
-    async createContractor(contractor: any){
+    async createContractor(contractor: any) {
         return this.databaseService.contractor.create({
-            data:{
+            data: {
                 ...contractor,
                 id: uuidv4()
             }
         })
     }
 
-    async reomveContractor(contractorId: any){
+    async reomveContractor(contractorId: any) {
         return this.databaseService.contractor.delete({
-            where:{
+            where: {
                 id: contractorId
             }
         })
@@ -77,6 +77,14 @@ export class BusService {
             where: {
                 id: conductorId
             }
+        });
+    }
+
+    async createSchedule(schedule: any) {
+        return this.databaseService.schedule.create({
+            data: {
+                ...schedule,
+            },
         });
     }
 
