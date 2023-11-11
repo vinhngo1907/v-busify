@@ -42,32 +42,43 @@ export class BusService {
         try {
             return this.databaseService.conductor.findMany({});
         } catch (error: any) {
-            throw new HttpException(error.message, error.status);
+            throw new HttpException('Conductor not found', 404);
         }
     }
 
-    async createContractor(contractor: any) {
+    async createContractor(contractor: any){
+        return this.databaseService.contractor.create({
+            data:{
+                ...contractor,
+                id: uuidv4()
+            }
+        })
+    }
+
+    async reomveContractor(contractorId: any){
+        return this.databaseService.contractor.delete({
+            where:{
+                id: contractorId
+            }
+        })
+    }
+
+    async createConductor(conductor: any) {
         return this.databaseService.contractor.create({
             data: {
-                ...contractor,
+                ...conductor,
                 id: uuidv4(),
             },
         });
     }
 
     async removeConductor(conductorId: string) {
-        try {
-            return this.databaseService.conductor.delete({
-                where: {
-                    id: conductorId
-                }
-            });
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
-
+        return this.databaseService.conductor.delete({
+            where: {
+                id: conductorId
+            }
+        });
     }
 
-    async getBookedTickets() {}
+    async getBookedTickets() { }
 }
