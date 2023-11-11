@@ -4,7 +4,7 @@ import { BusService } from './bus.service';
 import { DatabaseService } from 'src/database/database.service';
 
 @Module({
-  controllers: [BusController],
-  providers: [BusService, DatabaseService]
+    controllers: [BusController],
+    providers: [BusService, DatabaseService]
 })
-export class BusModule {}
+export class BusModule { }
