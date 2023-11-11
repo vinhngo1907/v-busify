@@ -1,17 +1,21 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { AppConfigService } from 'src/config/app-config.service';
 import { DatabaseService } from 'src/database/database.service';
-import { from } from 'rxjs';
-// import { KafkaService } from 'src/kafka/kafka.service';
+import { AppLoggerService } from 'src/logger/logger.service';
+import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class AuthService {
+    private readonly logger = new AppLoggerService(AuthService.name);
     private loggerService: Logger
     constructor(
-        private datbaseService: DatabaseService,
-        // private kafkaService: KafkaService
-    ) {
-        this.loggerService = new Logger();
-    }
+        private readonly prismaService: DatabaseService,
+        private readonly redisService: RedisService,
+        private readonly jwtService: JwtService,
+        private readonly appConfig: AppConfigService,
+        // private readonly bryptService: BcryptService,
+      ) {}
 
     // async onModuleInit() {
     //     try {

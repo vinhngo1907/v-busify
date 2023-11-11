@@ -11,6 +11,13 @@ export class AppConfigService {
         return this.configService.get('PORT') || 3333;
     }
 
+    get JwtExpiration(): number {
+        return this.configService.get(configKeys.JWT_EXPIRATION) || 10 * 60 * 1000;
+      }
+    get jwtSecret(): string {
+        return this.configService.get(configKeys.JWT_SECRET);
+      }
+
     get redisConfig(): RedisConfig{
         return {
             host: this.configService.get(configKeys.REDIS_HOST),
