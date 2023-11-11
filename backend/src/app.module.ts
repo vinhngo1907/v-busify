@@ -5,8 +5,8 @@ import { DatabaseModule } from './database/database.module';
 import { DatabaseService } from './database/database.service';
 import { AppConfigService } from './config/app-config.service';
 import { ConfigService } from '@nestjs/config';
-// import { GlobalJwtModule } from './globalJwt.module';
 import { AppConfigModule } from 'src/config/app-config.module';
+import { LoggerMiddleware } from './common/logger/logger.middleware';
 
 @Module({
 	imports: [
@@ -24,7 +24,7 @@ import { AppConfigModule } from 'src/config/app-config.module';
 })
 
 export class AppModule {
-	// configure(consumer: MiddlewareConsumer) {
-	// 	consumer.apply(LoggerMiddleware).forRoutes('*');
-	// }
+	configure(consumer: MiddlewareConsumer) {
+		consumer.apply(LoggerMiddleware).forRoutes('*');
+	}
 }
