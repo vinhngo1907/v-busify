@@ -8,7 +8,7 @@ export class AppConfigService {
     constructor(private readonly configService: ConfigService) { }
 
     get port(): number {
-        return this.configService.get('PORT') || 3333;
+        return this.configService.get('APP_PORT') || 3333;
     }
 
     get JwtExpiration(): number {
