@@ -3,6 +3,7 @@ import { from, of } from 'rxjs';
 import { DatabaseService } from 'src/database/database.service';
 import { BusDTO } from './dto';
 import { v4 as uuidv4 } from 'uuid';
+import { BusBadRequestException } from './bus.exception';
 
 @Injectable()
 export class BusService {
@@ -32,7 +33,8 @@ export class BusService {
                 },
             });
         } catch (error: any) {
-            throw new HttpException(error.message, error.status);
+            // throw new HttpException(error.message, error.status);
+            throw new BusBadRequestException('create');
         }
     }
 
