@@ -1,7 +1,7 @@
 import { IsString } from "class-validator";
 
 
-export class ClientDTO {
+export class AuthDTO {
 
     @IsString()
     raison_social: string;
