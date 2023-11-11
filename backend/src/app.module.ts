@@ -8,6 +8,7 @@ import { DatabaseModule } from './database/database.module';
 import { AppConfigModule } from 'src/config/app-config.module';
 import { LoggerMiddleware } from 'src/logger/logger.middleware';
 import { RedisModule } from './redis/redis.module';
+import { LoggerModule } from './logger/logger.module';
 
 @Module({
 	imports: [
@@ -16,6 +17,7 @@ import { RedisModule } from './redis/redis.module';
 		DatabaseModule,
 		AppConfigModule,
 		RedisModule,
+		LoggerModule
 	],
 	controllers: [],
 	// providers: [

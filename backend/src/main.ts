@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AppConfigService } from './config/app-config.service';
 import { DatabaseService } from './database/database.service';
-import { AppLoggerService } from './logger/logger.service';
+import { AppLoggerService } from 'src/logger/logger.service';
 import { HttpExceptionFilter } from './common/error/http-exception.filter';
 
 async function bootstrap() {
