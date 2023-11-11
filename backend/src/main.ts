@@ -2,6 +2,9 @@ import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AppConfigService } from './config/app-config.service';
+import { DatabaseService } from './database/database.service';
+import { AppLoggerService } from './logger/logger.service';
+import { HttpExceptionFilter } from './common/error/http-exception.filter';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
@@ -11,8 +14,24 @@ async function bootstrap() {
 	}
 	));
 
-	// app.useGlobalFilters(new HttpExceptionF)
-	const appConfigService = app.get<AppConfigService>(AppConfigService);
-	await app.listen(appConfigService.port);
+	app.useGlobalFilters(new HttpExceptionFilter());
+
+	const appConfigService = app.get(AppConfigService);
+
+	const databaseSerivce = app.get(DatabaseService);
+	databaseSerivce.$connect();
+
+	const logger = app.get(AppLoggerService);
+	app.useLogger(logger);
+
+	const port = appConfigService.port;
+
+	// setupSwagger(app);
+
+	await app.listen(port, () => {
+		logger.log(`Server is running on port ${port}`, 'Bootstrap');
+	});
+
+	await databaseSerivce.enableShutdownHooks(app);
 }
 bootstrap();

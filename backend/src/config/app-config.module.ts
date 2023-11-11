@@ -8,4 +8,4 @@ import { AppConfigService } from 'src/config/app-config.service';
   providers: [AppConfigService, ConfigService],
   exports: [AppConfigService],
 })
-export class AppConfigModule {}
+export class AppConfigModule { }
