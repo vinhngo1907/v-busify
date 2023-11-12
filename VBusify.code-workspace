@@ -1,0 +1,43 @@
+{
+    "folders": [
+        {
+            "name": "frontend",
+            "path": "./client"
+        },
+        {
+            "name": "backend",
+            "path": "./backend"
+        },
+    ],
+    "settings": {
+        "eslint.workingDirectories": [
+            "frontend",
+            "backend"
+        ],
+        "search.exclude": {
+            "**/node_modules": true,
+            "**/bower_components": true,
+            "**/*.js": {
+                "when": "$(basename).ts"
+            },
+            "**/*.map": true
+        },
+        "files.exclude": {
+            "**/.git": true,
+            "**/.svn": true,
+            "**/.hg": true,
+            "**/CVS": true,
+            "**/.DS_Store": true,
+            "**/*.map": true,
+            "**/*.js": {
+                "when": "$(basename).ts"
+            }
+        },
+        "emmet.triggerExpansionOnTab": true,
+        "breadcrumbs.enabled": true,
+        "workbench.editor.enablePreview": false,
+        "eslint.packageManager": "yarn",
+        "npm.packageManager": "yarn",
+        "files.eol": "\n"
+    },
+}
