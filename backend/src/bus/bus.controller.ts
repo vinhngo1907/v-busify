@@ -20,6 +20,34 @@ export class BusController {
     ) {
         return this.busService.findBusSchedule(page, limit, order_by);
     }
+
+    @Get('conductor')
+    getAllCondutors() {
+        try {
+            return this.busService.getConductors();
+        } catch (error) {
+            if (error instanceof HttpException) {
+                throw new HttpException(error.message, error.getStatus());
+            }
+        }
+    }
+
+    @Get('booked-tickets')
+    async getBookedTickets() {
+        return this.busService.getBookedTickets();
+    }
+
+    @Get('contractor')
+    async getAllContractors() {
+        try {
+            return this.busService.getContractors();
+        } catch (error) {
+            if (error instanceof HttpException) {
+                throw new HttpException(error.message, error.getStatus());
+            }
+        }
+    }
+
     @Post('bus')
     async createBus(@Body() bus: BusDTO) {
         try {

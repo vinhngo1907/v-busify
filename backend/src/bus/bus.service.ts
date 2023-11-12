@@ -80,6 +80,10 @@ export class BusService {
         });
     }
 
+    async getContractors() {
+        return this.databaseService.contractor.findMany({});
+    }
+
     async createSchedule(schedule: any) {
         return this.databaseService.schedule.create({
             data: {
