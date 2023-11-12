@@ -50,8 +50,17 @@ export class BusService {
         return this.databaseService.contractor.findMany({});
     }
 
-    async getContractorsById() {
+    async getContractorsById(contractorId: string) {
+        const contractor = await this.databaseService.contractor.findFirst({
+            where: {
+                id: contractorId
+            }
+        });
 
+        if (!contractor) {
+            throw new HttpException('Conductor not found', 404);
+        }
+        return contractor;
     }
 
     async createContractor(contractor: any) {
