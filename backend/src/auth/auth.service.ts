@@ -9,27 +9,27 @@ import axios from 'axios';
 
 @Injectable()
 export class AuthService {
-  private readonly logger = new AppLoggerService(AuthService.name);
-  private loggerService: Logger
-  constructor(
-    private readonly prismaService: DatabaseService,
-    private readonly redisService: RedisService,
-    private readonly jwtService: JwtService,
-    private readonly appConfig: AppConfigService,
-    // private readonly bryptService: BcryptService,
-  ) { }
+	private readonly logger = new AppLoggerService(AuthService.name);
+	private loggerService: Logger
+	constructor(
+		private readonly prismaService: DatabaseService,
+		private readonly redisService: RedisService,
+		private readonly jwtService: JwtService,
+		private readonly appConfig: AppConfigService,
+		// private readonly bryptService: BcryptService,
+	) { }
 
-  async googlLoginCallback(code: string, res: Response) {
-    try {
-    } catch (err) {
-      this.loggerService.error("An error while init the module exchange", err);
-    }
-  }
-  async getGoogleAuthToken(code: string) {
-    try {
-     
-    } catch (err: any) {
-      throw err;
-    }
-  }
+	async googlLoginCallback(code: string, res: Response) {
+		try {
+		} catch (err) {
+			this.loggerService.error("An error while init the module exchange", err);
+		}
+	}
+	async getGoogleAuthToken(code: string) {
+		try {
+			
+		} catch (err: any) {
+			throw err;
+		}
+	}
 }
