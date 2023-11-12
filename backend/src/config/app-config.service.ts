@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { RedisConfig } from 'src/redis/redis.types';
+import { GoogleConfig, RedisConfig } from 'src/redis/redis.types';
 import { configKeys } from './constants';
 
 @Injectable()
@@ -25,6 +25,13 @@ export class AppConfigService {
             password: this.configService.get(configKeys.REDIS_PASSWORD),
             db: this.configService.get(configKeys.REDIS_DB),
             ex: this.configService.get(configKeys.REDIS_EX),
+        }
+    }
+
+    get googleConfig(): GoogleConfig{
+        return {
+            GOOGLE_CLIENT_ID: this.configService.get(configKeys.GOOGLE_CLIENT_ID),
+            GOOGLE_SECRET: this.configService.get(configKeys.GOOGLE_SECRET)
         }
     }
 }
