@@ -17,6 +17,14 @@ export class BusService {
         }
     }
 
+    async createSchedule(schedule: any) {
+        return this.databaseService.schedule.create({
+            data: {
+                ...schedule,
+            },
+        });
+    }
+
     async createBus(bus: BusDTO) {
         try {
             const busData = await this.databaseService.bus.findFirst({
@@ -38,12 +46,12 @@ export class BusService {
         }
     }
 
-    async getConductors() {
-        try {
-            return this.databaseService.conductor.findMany({});
-        } catch (error: any) {
-            throw new HttpException('Conductor not found', 404);
-        }
+    async getContractors() {
+        return this.databaseService.contractor.findMany({});
+    }
+
+    async getContractorsById() {
+
     }
 
     async createContractor(contractor: any) {
@@ -63,6 +71,14 @@ export class BusService {
         })
     }
 
+    async getConductors() {
+        try {
+            return this.databaseService.conductor.findMany({});
+        } catch (error: any) {
+            throw new HttpException('Conductor not found', 404);
+        }
+    }
+
     async createConductor(conductor: any) {
         return this.databaseService.contractor.create({
             data: {
@@ -77,18 +93,6 @@ export class BusService {
             where: {
                 id: conductorId
             }
-        });
-    }
-
-    async getContractors() {
-        return this.databaseService.contractor.findMany({});
-    }
-
-    async createSchedule(schedule: any) {
-        return this.databaseService.schedule.create({
-            data: {
-                ...schedule,
-            },
         });
     }
 
