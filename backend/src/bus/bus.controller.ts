@@ -59,10 +59,10 @@ export class BusController {
         }
     }
     
-    @Get("/contractor/:id")
+    @Get("contractor/:id")
     async getContractorById(@Param('id') contractorId: string) {
         try {
-            return this.busService.getContractorById(contractorId);
+            return this.busService.findContractorsById(contractorId);
         } catch (error) {
             if (error instanceof HttpException) {
                 throw new HttpException(error.message, error.getStatus());
@@ -70,7 +70,7 @@ export class BusController {
         }
     }
 
-    @Delete('/:id')
+    @Delete('contractor/:id')
     async removeContractor(
         @Param('id') id: string,
         @Body('title') title: string, @Body('image') image: string) {
@@ -78,7 +78,7 @@ export class BusController {
         return await this.busService.reomveContractor(id);
     }
 
-    @Delete('/:id')
+    @Delete('conductor/:id')
     async removeConductor(@Param('id') id: string) {
         return await this.busService.removeConductor(id);
     }

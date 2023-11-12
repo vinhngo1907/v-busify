@@ -50,7 +50,7 @@ export class BusService {
         return this.databaseService.contractor.findMany({});
     }
 
-    async getContractorsById(contractorId: string) {
+    async findContractorsById(contractorId: string) {
         const contractor = await this.databaseService.contractor.findFirst({
             where: {
                 id: contractorId
