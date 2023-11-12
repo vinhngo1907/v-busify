@@ -4,7 +4,6 @@ import {
     HttpException
 } from '@nestjs/common';
 import { BusService } from './bus.service';
-import { map, of, switchMap } from 'rxjs';
 import { BusDTO, ContractorDTO } from './dto';
 
 @Controller('bus')
