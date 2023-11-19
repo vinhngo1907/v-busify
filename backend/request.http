@@ -1,3 +1,5 @@
 @urlServer=http://localhost:3000
 ###
 
+POST {{urlServer}}/auth/google
+

@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotAcceptableException } from '@nestjs/common';
+import { Injectable, Logger, NotAcceptableException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AppConfigService } from 'src/config/app-config.service';
 import { DatabaseService } from 'src/database/database.service';
@@ -76,5 +76,19 @@ export class AuthService {
 		} catch (error) {
 			throw new NotAcceptableException(error.message); //TODO: fix error type
 		}
+	}
+
+	async getCurrentUser(req) {
+		if (!req.user) {
+			throw new UnauthorizedException('You are not logged in or there may be an error. Please login again!');
+		}
+
+		const user = await this.prismaService.users.findUnique({
+			where:{
+				id: req.user.id
+			}
+		});
+
+		return user;
 	}
 }
