@@ -84,11 +84,15 @@ export class AuthService {
 		}
 
 		const user = await this.prismaService.users.findUnique({
-			where:{
+			where: {
 				id: req.user.id
 			}
 		});
 
 		return user;
+	}
+
+	async logout(res: Response) {
+		res.clearCookie('jwt').status(200).send({ message: "Successfully logged out." })
 	}
 }
