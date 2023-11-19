@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AppConfigService } from 'src/config/app-config.service';
 import { JwtStrategy } from './jwt.strategy';
 import TokenUtil from './utils/token';
+import { BcryptService } from 'src/bcrypt/bcrypt.service';
 
 @Module({
 	imports: [
@@ -20,7 +21,7 @@ import TokenUtil from './utils/token';
 			inject: [AppConfigService],
 		}),
 	],
-	providers: [AuthService, DatabaseService, JwtStrategy, TokenUtil],
+	providers: [AuthService, DatabaseService, JwtStrategy, TokenUtil, BcryptService],
 	controllers: [AuthController]
 })
 export class AuthModule { }
