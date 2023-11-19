@@ -33,13 +33,13 @@ model Bus {
 }
 
 model Schedule {
-    id            Int      @id @default(autoincrement())
+    id            String   @id
     busNumber     String
     bus           Bus      @relation(fields: [busNumber], references: [number])
     checkpoints   String[]
     from          String
     to            String
-    departureTime String[]
+    departureTime String
     days          String[]
     ticketPrice   Int
 }
