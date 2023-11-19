@@ -10,6 +10,11 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 export class AuthController {
     constructor(private authService: AuthService,) { }
 
+    @Get("")
+    async test(@Req() req: Request, @Res() res: Response) {
+        res.status(200).json({message: "Success"})
+    }
+
     @Post('google')
     async googleAuthRedirect(@Body('code') code: string, @Res() res: Response) {
         return await this.authService.googlLoginCallback(code, res);

@@ -2,4 +2,12 @@
 ###
 
 POST {{urlServer}}/auth/google
+Content-Type: application/json
 
+{
+    "code": ""
+}
+
+###
+
+GET {{urlServer}}/auth
