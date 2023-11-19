@@ -23,10 +23,11 @@ const BusSchedule = () => {
     const [today, setToday] = useState(new Date());
     useEffect(() => {
         const getScheduleData = async () => {
-            const res = await axios.get('https://localhost:3000/bus/schedule', {
+            const res = await axios.get('http://localhost:3000/bus/schedule', {
                 withCredentials: true,
             });
             if (res.status === 200) {
+                console.log(res.data)
                 setSchedule(res.data.schedule);
                 setToday(res.data.today);
                 setSelectedDay(weekDays[today.getDay()]);

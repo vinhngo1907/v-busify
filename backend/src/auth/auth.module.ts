@@ -6,6 +6,7 @@ import { DatabaseService } from 'src/database/database.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AppConfigService } from 'src/config/app-config.service';
 import { JwtStrategy } from './jwt.strategy';
+import TokenUtil from './utils/token';
 
 @Module({
 	imports: [
@@ -19,7 +20,7 @@ import { JwtStrategy } from './jwt.strategy';
 			inject: [AppConfigService],
 		}),
 	],
-	providers: [AuthService, DatabaseService, JwtStrategy],
+	providers: [AuthService, DatabaseService, JwtStrategy, TokenUtil],
 	controllers: [AuthController]
 })
 export class AuthModule { }
