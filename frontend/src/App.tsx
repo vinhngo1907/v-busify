@@ -10,10 +10,12 @@ import BusDetails from './components/BusDetails';
 import GoogleAuthLogin from './components/GoogleAuthLogin';
 import UserProtectedRoute from './components/ProtectedRoutes';
 import Demo from './pages/Demo';
+import ValidateAuth from './components/ValidateAuth';
 
 function App() {
 	return (
 		<ThemeProvider theme={theme}>
+			<ValidateAuth />
 			<CssBaseline />
 			<Box margin={{ xs: "1rem", md: "3rem 5rem" }}>
 				<Navbar />
