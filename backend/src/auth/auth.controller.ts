@@ -4,7 +4,7 @@ import { pipe, switchMap, of } from 'rxjs';
 // eslint-disable-next-line node/no-extraneous-import
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './jwt-auth.guard';
+import { JwtAuthGuard } from './utils/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {

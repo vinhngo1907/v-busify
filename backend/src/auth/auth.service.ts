@@ -101,7 +101,6 @@ export class AuthService {
 				id: req.user.id
 			}
 		});
-		console.log({user});
 		return user;
 	}
 

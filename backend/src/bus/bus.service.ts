@@ -13,7 +13,7 @@ export class BusService {
     async findBusSchedule(page: number = 1, limit: number = 10, order_by: string = 'desc') {
         return {
             today: new Date(),
-            schedule: await this.databaseService.bus.findMany({})
+            schedule: await this.databaseService.schedule.findMany({})
         }
     }
 

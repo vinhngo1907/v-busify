@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { BusService } from './bus.service';
 import { BusDTO, ContractorDTO } from './dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/utils/jwt-auth.guard';
 
 @Controller('bus')
 export class BusController {

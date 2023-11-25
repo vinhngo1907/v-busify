@@ -1,11 +1,10 @@
 import { Grid, Typography } from '@mui/material';
 import BusTicket from '../../components/BusTicket';
 import theme from '../../theme';
-import { useScreen } from "../../customHooks/useScreen";
-import { useEffect, useState } from "react";
+import { useScreen } from '../../customHooks/useScreen';
+import { useEffect, useState } from 'react';
 import { BusTicketType } from '../../types';
 import axios from 'axios';
-
 const weekDays = [
     'Sunday',
     'Monday',
@@ -15,25 +14,23 @@ const weekDays = [
     'Friday',
     'Saturday',
 ];
-
 const BusSchedule = () => {
     const currentScreen = useScreen();
     const [selectedDay, setSelectedDay] = useState<string>('');
     const [schedule, setSchedule] = useState<BusTicketType[]>([]);
-    const [today, setToday] = useState(new Date());
+    const [today, setToday] = useState<Date>(new Date());
+
     useEffect(() => {
         const getScheduleData = async () => {
-            const res = await axios.get('http://localhost:3000/bus/schedule', {
+            const res = await axios.get('http://localhost:3000/bus/schedule/', {
                 withCredentials: true,
             });
-
             if (res.status === 200) {
-                console.log(res.data)
                 setSchedule(res.data.schedule);
-                setToday(res.data.today);
+                setToday(new Date(res.data.today));
                 setSelectedDay(weekDays[today.getDay()]);
             }
-        }
+        };
         getScheduleData();
     }, []);
 
@@ -75,30 +72,26 @@ const BusSchedule = () => {
                 <Grid container direction="column" marginTop="2rem">
                     <Grid item>
                         {schedule.map((TicketData, index) => {
-                            if(TicketData){
-                                console.log({TicketData})
-                                return <></>
+                            if (TicketData.days.includes(selectedDay)) {
+                                return (
+                                    <BusTicket
+                                        checkpoints={TicketData.checkpoints}
+                                        price={TicketData.ticketPrice}
+                                        time={TicketData.departureTime}
+                                        disabled={selectedDay !== weekDays[today.getDay()]}
+                                        seatsLeft={50}
+                                        key={index}
+                                        to={TicketData.to}
+                                        from={TicketData.from}
+                                    />
+                                );
                             }
-                            // if (TicketData.days.includes(selectedDay)) {
-                            //     return (
-                            //         <BusTicket
-                            //             checkpoints={TicketData.checkpoints}
-                            //             price={TicketData.ticketPrice}
-                            //             time={TicketData.departureTime}
-                            //             disabled={selectedDay !== weekDays[today.getDay()]}
-                            //             seatsLeft={50}
-                            //             key={index}
-                            //             to={TicketData.to}
-                            //             from={TicketData.from}
-                            //         />
-                            //     )
-                            // }
                         })}
                     </Grid>
                 </Grid>
             </Grid>
         </>
-    )
-}
+    );
+};
 
 export default BusSchedule;

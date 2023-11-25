@@ -22,7 +22,14 @@ export class JwtAuthGuard implements CanActivate {
     canActivate(context: ExecutionContext): boolean {
         const request = context.switchToHttp().getRequest();
         if (request.headers.cookie) {
-            const token = request.headers.cookie.split('=')[1];
+            const parts = request.headers.cookie.split(";");
+            // Find the part that starts with "jwt="
+            const jwtPart = parts.find((part: String) => part.trim().startsWith('jwt='));
+
+            // Extract the JWT by removing the "jwt=" prefix
+            const token = jwtPart ? jwtPart.trim().substring(4) : null;
+            // const token = request.headers.cookie.split('=')[1];
+            // console.log({ token })
             const user = this.validateToken(token);
             if (!user) {
                 throw new UnauthorizedException(
