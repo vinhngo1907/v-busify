@@ -11,8 +11,11 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import helpIcon from '../../assets/helpIcon.svg';
+import googleIcon from '../../assets/googleIcon.svg';
 import { useScreen } from '../../customHooks/useScreen';
 import toast, { Toaster } from 'react-hot-toast';
+import { userAuthStore } from '../../store/authStore';
+import getGoogleOAuthURL from '../../utils/getOAuthRedirectUrl';
 
 const NavbarContainer = styled(Box)`
     display: flex;
@@ -28,6 +31,31 @@ const HelpButton = styled(Box)`
 const LinkContainer = styled(Link)`
   text-decoration: none;
   color: inherit;
+`;
+
+const GoogleButton = styled(Button)`
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	text-transform: none;
+	border: 4px solid rgba(66, 133, 244, 0.1);
+	border-radius: 8px;
+  
+	&:hover {
+	  border: 4px solid rgba(66, 133, 244, 0.1);
+	  background-color: #fff;
+	}
+`;
+
+const ProfileContainer = styled(Box)`
+	display: flex;
+	align-items: center;
+	border-radius: 8px;
+	cursor: pointer;
+	&:hover {
+		border: 0.5px solid ${({ theme }) => theme.palette.primary.main};
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+	}
 `;
 
 const ManageButton = styled(Box)`
@@ -47,6 +75,21 @@ const ManageButton = styled(Box)`
 export default function Navbar() {
 	const currentScreen = useScreen();
 	const theme = useTheme();
+	const { isAuth, user, setIsAuth, setUser } = userAuthStore();
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
+
+	const openMenu = (event: React.MouseEvent<HTMLDivElement>) => {
+		setAnchorEl(event.currentTarget);
+	}
+
+	const closeMenu = async (event: React.MouseEvent<HTMLDivElement | HTMLAnchorElement>) => {
+		event.stopPropagation();
+		setAnchorEl(null)
+	}
+
+	const profile_container = useRef<HTMLDivElement | null>(null);
+
 	return (
 		<NavbarContainer>
 			<Typography variant='h1' color={theme.palette.primary.main} fontSize={{ xs: "1.25rem", md: "2.5rem" }}>
@@ -60,6 +103,18 @@ export default function Navbar() {
 						Help
 					</Typography>
 				</HelpButton>
+				{
+					!isAuth ? (
+						<GoogleButton variant="outlined" href={getGoogleOAuthURL()}>
+							<img src={googleIcon} alt="google" />
+							<Typography variant="h6" color={theme.palette.common.black}>
+								Login with Google
+							</Typography>
+						</GoogleButton>
+					) : (
+						<></>
+					)
+				}
 			</Box>
 			<Toaster position="top-center" />
 		</NavbarContainer>
