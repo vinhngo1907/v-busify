@@ -5,11 +5,11 @@ import { useSearchParams } from 'react-router-dom';
 
 const GoogleAuthLogin = () => {
     const [searchParams] = useSearchParams();
+    
     useEffect(() => {
-        console.log({searchParams})
         const googleLoginHandler = async () => {
             const code = searchParams.get('code');
-            console.log(code);
+            console.log({code});
             await axios.post('http://localhost:3000/auth/google', { code, }, {
                 withCredentials: true,
                 headers: {

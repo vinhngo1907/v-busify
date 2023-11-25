@@ -1,27 +1,27 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface AuthStore {
     isAuth: boolean;
     user: User | null;
-    isLoading: boolean;
+    isloading: boolean;
     setIsAuth: (isAuth: boolean) => void;
     setUser: (user: User | null) => void;
-    setIsLoading: (isLoading: boolean) => void;
+    setIsLoading: (isloading: boolean) => void;
 }
 
 interface User {
     id: number;
     email: string;
-    address: string;
+    name: string;
     picture: string;
     role: string;
 }
 
-export const userAuthStore = create<AuthStore>(set => ({
+export const useAuthStore = create<AuthStore>(set => ({
     isAuth: false,
     user: null,
-    isLoading: true,
+    isloading: true,
     setIsAuth: isAuth => set({ isAuth }),
     setUser: user => set({ user }),
-    setIsLoading: isLoading => set({ isLoading })
+    setIsLoading: isloading => set({ isloading }),
 }));

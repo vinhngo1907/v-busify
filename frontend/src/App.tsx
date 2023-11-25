@@ -8,6 +8,8 @@ import Home from './pages/Home';
 import BusSchedule from './pages/BusSchedule';
 import BusDetails from './components/BusDetails';
 import GoogleAuthLogin from './components/GoogleAuthLogin';
+import UserProtectedRoute from './components/ProtectedRoutes';
+import Demo from './pages/Demo';
 
 function App() {
 	return (
@@ -20,14 +22,14 @@ function App() {
 					<Route path="/google" element={<GoogleAuthLogin />} />
 					<Route path="/bus-schedule" element={<BusSchedule />} />
 					<Route path="/bus-details" element={<BusDetails />} />
-					{/* <Route
+					<Route
 						path="/demo-Page"
 						element={
 							<UserProtectedRoute>
-								<Demopage />
+								<Demo />
 							</UserProtectedRoute>
 						}
-					/> */}
+					/>
 				</Routes>
 				<Footer />
 			</Box>
