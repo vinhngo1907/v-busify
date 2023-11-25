@@ -1,7 +1,7 @@
 import { JwtService } from "@nestjs/jwt";
 
 class TokenUtil {
-    constructor(private jwtService: JwtService) { }
+    constructor(private readonly jwtService: JwtService,) { }
 
     static toUnix(date: Date): number {
         return Math.floor(date.getTime() / 1000);

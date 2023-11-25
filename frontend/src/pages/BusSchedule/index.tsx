@@ -18,7 +18,7 @@ const weekDays = [
 
 const BusSchedule = () => {
     const currentScreen = useScreen();
-    const [selectedDay, setSelectedDay] = useState('');
+    const [selectedDay, setSelectedDay] = useState<string>('');
     const [schedule, setSchedule] = useState<BusTicketType[]>([]);
     const [today, setToday] = useState(new Date());
     useEffect(() => {
@@ -26,6 +26,7 @@ const BusSchedule = () => {
             const res = await axios.get('http://localhost:3000/bus/schedule', {
                 withCredentials: true,
             });
+
             if (res.status === 200) {
                 console.log(res.data)
                 setSchedule(res.data.schedule);
@@ -74,20 +75,24 @@ const BusSchedule = () => {
                 <Grid container direction="column" marginTop="2rem">
                     <Grid item>
                         {schedule.map((TicketData, index) => {
-                            if (TicketData.days.includes(selectedDay)) {
-                                return (
-                                    <BusTicket
-                                        checkpoints={TicketData.checkpoints}
-                                        price={TicketData.ticketPrice}
-                                        time={TicketData.departureTime}
-                                        disabled={selectedDay !== weekDays[today.getDay()]}
-                                        seatsLeft={50}
-                                        key={index}
-                                        to={TicketData.to}
-                                        from={TicketData.from}
-                                    />
-                                )
+                            if(TicketData){
+                                console.log({TicketData})
+                                return <></>
                             }
+                            // if (TicketData.days.includes(selectedDay)) {
+                            //     return (
+                            //         <BusTicket
+                            //             checkpoints={TicketData.checkpoints}
+                            //             price={TicketData.ticketPrice}
+                            //             time={TicketData.departureTime}
+                            //             disabled={selectedDay !== weekDays[today.getDay()]}
+                            //             seatsLeft={50}
+                            //             key={index}
+                            //             to={TicketData.to}
+                            //             from={TicketData.from}
+                            //         />
+                            //     )
+                            // }
                         })}
                     </Grid>
                 </Grid>

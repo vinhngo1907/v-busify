@@ -26,15 +26,20 @@ export class AuthService {
 			// console.log({ id_token })
 			const decodedUser: any = this.jwtService.decode(id_token); // TODO: fix any with interface
 			// console.log({ decodedUser })
-			const { token } = this.tokenUtil.createToken(decodedUser.email, decodedUser.sub);
-			console.log({token})
+			// const { token } = this.tokenUtil.createToken(decodedUser.email, decodedUser.sub);
+			const token = this.jwtService.sign({
+				email: decodedUser.email,
+				id: decodedUser.sub
+			}, { expiresIn: '30d' });
+
+			// console.log({ token });
 			// Check user exist
 			const user = await this.prismaService.users.findUnique({
 				where: {
 					email: decodedUser.email
 				}
 			});
-			console.log({ user });
+			// console.log({ user });
 			if (user) {
 				return res.status(202)
 					.cookie('jwt', token, {
@@ -96,7 +101,7 @@ export class AuthService {
 				id: req.user.id
 			}
 		});
-
+		console.log({user});
 		return user;
 	}
 
