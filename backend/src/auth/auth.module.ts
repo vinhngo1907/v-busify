@@ -5,7 +5,7 @@ import { DatabaseModule } from 'src/database/database.module';
 import { DatabaseService } from 'src/database/database.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AppConfigService } from 'src/config/app-config.service';
-import { JwtStrategy } from './jwt.strategy';
+// import { JwtStrategy } from './jwt.strategy';
 import TokenUtil from './utils/token';
 import { BcryptService } from 'src/bcrypt/bcrypt.service';
 
@@ -21,7 +21,7 @@ import { BcryptService } from 'src/bcrypt/bcrypt.service';
 			inject: [AppConfigService],
 		}),
 	],
-	providers: [AuthService, DatabaseService, JwtStrategy, TokenUtil, BcryptService],
+	providers: [AuthService, DatabaseService, TokenUtil, BcryptService],
 	controllers: [AuthController]
 })
 export class AuthModule { }

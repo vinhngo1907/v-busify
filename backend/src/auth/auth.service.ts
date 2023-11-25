@@ -23,14 +23,18 @@ export class AuthService {
 	async googlLoginCallback(code: string, res: Response) {
 		try {
 			const { id_token } = await this.getGoogleAuthToken(code);
+			// console.log({ id_token })
 			const decodedUser: any = this.jwtService.decode(id_token); // TODO: fix any with interface
+			// console.log({ decodedUser })
 			const { token } = this.tokenUtil.createToken(decodedUser.email, decodedUser.sub);
+			console.log({token})
 			// Check user exist
 			const user = await this.prismaService.users.findUnique({
 				where: {
 					email: decodedUser.email
 				}
 			});
+			console.log({ user });
 			if (user) {
 				return res.status(202)
 					.cookie('jwt', token, {
@@ -46,14 +50,17 @@ export class AuthService {
 					picture: decodedUser.picture,
 				}
 			});
-
-			res.status(202).cookie('jwt', token, {
+			if (!newUser) {
+				return res.status(400).json({ message: "Login failed, please try again!!!" });
+			}
+			// console.log({ newUser })
+			return res.status(202).cookie('jwt', token, {
 				httpOnly: true,
-				maxAge: 60 * 1000,
+				maxAge: 30 * 24 * 60 * 60 * 1000,
 			}).send(newUser);
-		} catch (err) {
-			console.log(err);
-			this.loggerService.error("An error while init the module exchange", err);
+		} catch (error) {
+			console.log(error);
+			throw new Error(error);
 		}
 	}
 
@@ -72,9 +79,9 @@ export class AuthService {
 					'Content-Type': 'application/x-www-form-urlencoded',
 				},
 			});
-			console.log({response});
 			return response.data;
 		} catch (error) {
+			// console.log(error);
 			throw new NotAcceptableException(error?.message || error); //TODO: fix error type
 		}
 	}
