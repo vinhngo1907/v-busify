@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Query, UseGuards, OnModuleInit, Post, Res, Body, Req } from '@nestjs/common';
+import { Controller, Get, Inject, Query, UseGuards, OnModuleInit, Post, Res, Body, Req, Options } from '@nestjs/common';
 import { pipe, switchMap, of } from 'rxjs';
 // import { AuthGuard } from 'src/redis/redis.module';
 // eslint-disable-next-line node/no-extraneous-import
@@ -10,9 +10,17 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 export class AuthController {
     constructor(private authService: AuthService,) { }
 
+    @Options('google')
+    handleOptions(@Res() res: Response) {
+        // Add necessary headers for CORS
+        res.setHeader('Access-Control-Allow-Methods', 'POST');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        res.status(204).end();
+    }
+
     @Get("")
     async test(@Req() req: Request, @Res() res: Response) {
-        res.status(200).json({message: "Success"})
+        res.status(200).json({ message: "Success" });
     }
 
     @Post('google')

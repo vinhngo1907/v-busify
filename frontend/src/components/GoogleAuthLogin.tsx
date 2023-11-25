@@ -8,6 +8,7 @@ const GoogleAuthLogin = () => {
     
     useEffect(() => {
         const googleLoginHandler = async () => {
+            console.log("Full URL:", window.location.href);
             const code = searchParams.get('code');
             console.log({code});
             await axios.post('http://localhost:3000/auth/google', { code, }, {
