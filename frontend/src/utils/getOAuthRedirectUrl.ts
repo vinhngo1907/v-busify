@@ -1,7 +1,7 @@
 const getGoogleOAuthURL = (): string => {
     const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
     const options = {
-        redirect_uri: 'http://localhost:3000/google',
+        redirect_uri: 'http://localhost:5173/google',
         client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
         access_type: 'offline',
         response_type: 'code',

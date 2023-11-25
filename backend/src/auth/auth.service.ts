@@ -52,10 +52,10 @@ export class AuthService {
 				maxAge: 60 * 1000,
 			}).send(newUser);
 		} catch (err) {
+			console.log(err);
 			this.loggerService.error("An error while init the module exchange", err);
 		}
 	}
-
 
 	async getGoogleAuthToken(code: string) {
 		const url = 'https://oauth2.googleapis.com/token';
@@ -63,7 +63,7 @@ export class AuthService {
 			code,
 			client_id: this.appConfig.googleConfig.GOOGLE_CLIENT_ID,
 			client_secret: this.appConfig.googleConfig.GOOGLE_SECRET,
-			redirect_uri: 'http://localhost:3000/google',
+			redirect_uri: 'http://localhost:5173/google',
 			grant_type: 'authorization_code',
 		};
 		try {
@@ -72,13 +72,14 @@ export class AuthService {
 					'Content-Type': 'application/x-www-form-urlencoded',
 				},
 			});
+			console.log({response});
 			return response.data;
 		} catch (error) {
-			throw new NotAcceptableException(error.message); //TODO: fix error type
+			throw new NotAcceptableException(error?.message || error); //TODO: fix error type
 		}
 	}
 
-	async getCurrentUser(req) {
+	async getCurrentUser(req: any) {
 		if (!req.user) {
 			throw new UnauthorizedException('You are not logged in or there may be an error. Please login again!');
 		}
