@@ -9,6 +9,7 @@ import FareBreakDownCard from '../FareBreakdownCard';
 import { BusDetailsType } from "../../types";
 import { useAuthStore } from "../../store/authStore";
 import { useOrderStore } from "../../store/orderStore";
+import BusDetailsCard from "../BusDetailsCard";
 
 const BusDetails = ({ from, to, disabled, time }: BusDetailsType) => {
     const theme = useTheme();
@@ -87,6 +88,7 @@ const BusDetails = ({ from, to, disabled, time }: BusDetailsType) => {
             destination: to,
             time: time
         }));
+        openDrawer();
     }
 
     const Details = styled(Box)`
@@ -174,7 +176,22 @@ const BusDetails = ({ from, to, disabled, time }: BusDetailsType) => {
             >
                 Book ticket
             </Button>
-            <Drawer>
+            <Drawer
+                anchor="right"
+                open={isDrawerOpen}
+                onClose={() => {
+                    closeDrawer();
+                    passengerDetail.map(value => {
+                        removePassenger(value.emailID);
+                    });
+                    useOrderStore.setState(() => ({
+                        ticketQuantity: 0
+                    }));
+                }}
+                PaperProps={{
+                    sx: drawerstyle,
+                }}
+            >
                 <Box
                     sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
                 >
@@ -195,7 +212,7 @@ const BusDetails = ({ from, to, disabled, time }: BusDetailsType) => {
                         Bus Details
                     </Typography>
                     <Details sx={{ flexDirection: { xs: 'column', sm: 'row' } }}>
-                        {/* <BusDetailsCard /> */}
+                        <BusDetailsCard />
                     </Details>
                 </Box>
                 <Box>

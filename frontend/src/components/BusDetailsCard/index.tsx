@@ -12,7 +12,7 @@ const Icon = styled('img')`
 
 function BusDetailsCard(){
     const theme = useTheme();
-    
+    return (<></>);
 }
 
 export default BusDetailsCard;
