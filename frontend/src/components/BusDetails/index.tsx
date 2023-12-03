@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Drawer, IconButton, Typography, styled, useTheme } from "@mui/material";
+import { Box, Button, Drawer, IconButton, TextField, Typography, styled, useTheme } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
@@ -111,10 +111,50 @@ const BusDetails = ({ from, to, disabled, time }: BusDetailsType) => {
         min-height: 20vh;
     `;
 
+    const AddPassengerButton = styled(Button)`
+        display: flex;
+        align-items: center;
+        color: rgba(0, 0, 0, 0.5);
+        min-width: max-content;
+
+        &:hover {
+            color: rgba(0, 0, 0, 0.5);
+            background-color: transparent;
+        }
+    `;
+
+    const AddPassengerIcon = styled(AddIcon)`
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        padding: 2px;
+    `;
+
     const CrossIcon = styled(CloseIcon)`
         border: 1px solid rgba(0, 0, 0, 0.5);
         border-radius: 50%;
         padding: 2px;
+    `;
+
+    const CustomTextField = styled(TextField)`
+        .MuiInput-underline:after {
+            border-bottom-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .MuiFormLabel-root.Mui-focused {
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        .MuiFormLabel-root {
+            font-size: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .MuiFormLabel-root {
+            font-size: 12px;
+            }
+        }
+
+        margin: 0;
     `;
 
     return (
@@ -173,8 +213,91 @@ const BusDetails = ({ from, to, disabled, time }: BusDetailsType) => {
                         >
                             Passenger Details
                         </Typography>
-                        {/* {!isAddingPassenger} */}
+                        {
+                            !isAddingPassenger ? (
+                                <AddPassengerButton
+                                    variant="text"
+                                    style={{ display: passengerDetail.length === 4 ? 'none' : "flex" }}
+                                    onClick={() => setIsAddingPassenger(true)}
+                                >
+                                    <Typography
+                                        variant="h6"
+                                        color={theme.palette.common.black}
+                                        textTransform="none"
+                                        sx={{
+                                            display: { xs: 'none', sm: 'block' },
+                                            marginLeft: '0.5rem',
+                                        }}
+                                    >
+                                        Add a new passenger
+                                    </Typography>
+                                    <AddPassengerIcon sx={{ fontSize: { md: '1rem' } }} />
+                                </AddPassengerButton>
+                            ) : (
+                                <IconButton
+                                    onClick={() => setIsAddingPassenger(false)}
+                                    size="small"
+                                >
+                                    <CrossIcon sx={{ fontSize: { md: '1rem' } }} />
+                                </IconButton>
+                            )
+                        }
                     </Box>
+                    <PassengersContainer>
+                        {passengerDetail.map((passenger, index) => (
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Typography variant="h6" color={theme.palette.secondary.main}>
+                                    {index + 1}. {passenger.emailID}
+                                </Typography>
+                                <IconButton
+                                    onClick={() => handleRemovePassenger(passenger.emailID)}
+                                    size="small"
+                                >
+                                    <CrossIcon sx={{ fontSize: { md: '1rem' } }} />
+                                </IconButton>
+                            </Box>
+                        ))}
+                        {!isAddingPassenger ? (
+                            passengerDetail.length === 0 && (
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        height: '20vh',
+                                    }}
+                                >
+                                    <Typography
+                                        variant="h5"
+                                        color={theme.palette.common.black}
+                                        fontSize={{ xs: '1rem', md: '1.25rem' }}
+                                    >
+                                        No Passengers are added currently
+                                    </Typography>
+                                </Box>
+                            )
+                        ) : (
+                            <form onSubmit={handleAddPassenger}>
+                                <CustomTextField
+                                    label="Write passenger’s Email ID"
+                                    variant="standard"
+                                    fullWidth
+                                    onKeyDown={event => {
+                                        if (event.key === 'Enter') {
+                                            handleAddPassenger(event);
+                                        }
+                                    }}
+                                    onBlur={event => handleAddPassenger(event)}
+                                />
+                            </form>
+                        )}
+                    </PassengersContainer>
                 </Box>
                 <Box>
                     <Typography
