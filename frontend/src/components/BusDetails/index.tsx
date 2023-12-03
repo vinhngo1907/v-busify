@@ -336,7 +336,11 @@ const BusDetails = ({ from, to, disabled, time }: BusDetailsType) => {
                 >
                     <Button
                         variant="contained"
-
+                        onClick={() => {
+                            passengerDetail.length
+                            ? navigate('/checkout')
+                            :notify('Please add at least one passenger')
+                        }}
                         sx={{
                             padding: '0.5rem 2rem',
                             borderRadius: '8px',
