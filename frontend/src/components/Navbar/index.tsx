@@ -8,7 +8,9 @@ import {
 	Menu,
 	MenuItem,
 	IconButton,
+	Avatar,
 } from '@mui/material';
+import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import { Link } from 'react-router-dom';
 import helpIcon from '../../assets/helpIcon.svg';
 import googleIcon from '../../assets/googleIcon.svg';
@@ -16,6 +18,7 @@ import { useScreen } from '../../customHooks/useScreen';
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuthStore } from '../../store/authStore';
 import getGoogleOAuthURL from '../../utils/getOAuthRedirectUrl';
+import axios from 'axios';
 
 const NavbarContainer = styled(Box)`
     display: flex;
@@ -88,6 +91,28 @@ export default function Navbar() {
 		setAnchorEl(null)
 	}
 
+	const handleLogout = async () => {
+		try {
+			const res = await axios.get('http://localhost:3000/auth/logout', {
+				withCredentials: true
+			});
+
+			if (res.status === 200) {
+				setIsAuth(false);
+				setUser(null);
+				window.location.replace('/');
+			}
+		} catch (error) {
+			console.log('Error: ', error)
+			toast.error('', {
+				position: 'top-center',
+				duration: 300
+			});
+
+			setAnchorEl(null);
+		}
+	}
+
 	const profile_container = useRef<HTMLDivElement | null>(null);
 
 	return (
@@ -112,8 +137,81 @@ export default function Navbar() {
 							</Typography>
 						</GoogleButton>
 					) : (
-						<></>
+						<ProfileContainer
+							id="basic-button"
+							aria-controls={open ? 'basic-menu' : undefined}
+							aria-haspopup="true"
+							aria-expanded={open ? 'true' : undefined}
+							onClick={openMenu}
+							sx={{
+								cursor: 'pointer',
+								border: currentScreen === 'xs' ? 'none' : '0.5px solid #4f4f4f',
+							}}
+							ref={profile_container}
+						>
+							{
+								currentScreen === 'xs'
+									? <IconButton>
+										<Avatar alt={user?.name} src={user?.picture} sx={{ width: '1.8rem', height: '1.8rem' }} />
+										{<ArrowDropDown />}
+									</IconButton>
+									: <>
+										<Avatar
+											alt={user?.name}
+											src={user?.picture}
+											sx={{ width: '1.5rem', height: '1.5rem', marginLeft: '.5em' }}
+										/>
+										<Typography
+											variant="h6"
+											color={theme.palette.common.black}
+											padding="0.5rem 1rem"
+											textTransform={'none'}
+										>
+											Hi, {user?.name}!
+										</Typography>
+									</>
+							}
+							<Menu
+								id="basic-menu"
+								anchorEl={anchorEl}
+								open={open}
+								onClose={closeMenu}
+								MenuListProps={{
+									'aria-labelledby': 'basic-button',
+									style: {
+										width: currentScreen === 'xs'
+											? 130
+											: profile_container.current?.offsetWidth || 0,
+									},
+								}}
+							>
+								<MenuItem>
+									<LinkContainer to="#" onClick={closeMenu}>
+										View Profile
+									</LinkContainer>
+								</MenuItem>
+								<MenuItem>
+									<LinkContainer to="#" onClick={handleLogout}>
+										Logout
+									</LinkContainer>
+								</MenuItem>
+							</Menu>
+						</ProfileContainer>
 					)
+				}
+				{
+					user?.role === "admin"
+						? (
+							currentScreen === "lg" || currentScreen === 'xl'
+								? (
+									<ManageButton>
+										<Typography variant="h6" color={theme.palette.common.black}>
+											Manage Buses
+										</Typography>
+									</ManageButton>
+								)
+								: (<></>)
+						) : (<></>)
 				}
 			</Box>
 			<Toaster position="top-center" />

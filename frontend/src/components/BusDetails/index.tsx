@@ -88,7 +88,7 @@ const BusDetails = ({ from, to, disabled, time }: BusDetailsType) => {
             time: time
         }));
     }
-    
+
     const Details = styled(Box)`
         display: flex;
         justify-content: center;
@@ -101,7 +101,7 @@ const BusDetails = ({ from, to, disabled, time }: BusDetailsType) => {
     `;
 
     const PassengersContainer = styled(Box)`
-        display: flex;
+        display: flex;;
         flex-direction: column;
         gap: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);

@@ -25,3 +25,4 @@ export const useAuthStore = create<AuthStore>(set => ({
     setUser: user => set({ user }),
     setIsLoading: isloading => set({ isloading }),
 }));
+  
