@@ -3,7 +3,7 @@ import { useAuthStore } from "../store/authStore";
 import axios from "axios";
 
 const ValidateAuth: React.FC = () => {
-    const { isAuth, isloading, setIsAuth, setUser, setIsLoading } = useAuthStore();
+    const { setIsAuth, setUser, setIsLoading } = useAuthStore();
     useEffect(() => {
         const checkAuth = async () => {
             try {
