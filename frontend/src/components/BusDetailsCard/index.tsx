@@ -53,6 +53,31 @@ function BusDetailsCard() {
                 </Box>
             </Box>
             <img src={arrorIcon} alt="Arrow Icon" />
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: { xs: '5px', md: '10px' },
+                }}
+            >
+                <Icon src={busIcon} alt="Bus Icon" />
+                <Box>
+                    <Typography
+                        variant="h6"
+                        fontSize={{ xs: '0.8rem', md: '1rem' }}
+                        color={theme.palette.common.black}
+                    >
+                        To
+                    </Typography>
+                    <Typography
+                        variant="h4"
+                        fontSize={{ xs: '1.25rem', md: '1.5rem' }}
+                        color={theme.palette.secondary.main}
+                    >
+                        {destination}
+                    </Typography>
+                </Box>
+            </Box>
         </Box>
     </>);
 }
