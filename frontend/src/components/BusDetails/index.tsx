@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
 import FareBreakDownCard from '../FareBreakdownCard';
 import { BusDetailsType } from "../../types";
+import { useAuthStore } from "../../store/authStore";
+import { useOrderStore } from "../../store/orderStore";
 
 const BusDetails = ({ from, to, disabled, time }: BusDetailsType) => {
     const theme = useTheme();
@@ -14,9 +16,23 @@ const BusDetails = ({ from, to, disabled, time }: BusDetailsType) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const [isAddingPassenger, setIsAddingPassenger] = useState(false)
     const [isToasterActive, setIsToasterActive] = useState(false)
+    const { isAuth } = useAuthStore();
+    const addPassenger = useOrderStore(state => state.addPassenger);
+    const { passengerDetail, removePassenger } = useOrderStore();
 
-    const bookTicketHandler = () => {
+    const notify = (message: string) => {
+        if (!isToasterActive) {
+            setIsToasterActive(true);
 
+            toast.error(message, {
+                position: 'top-center',
+                duration: 3000
+            });
+
+            setTimeout(() => {
+                setIsToasterActive(false);
+            }, 3000);
+        }
     }
 
     const drawerstyle = {
@@ -26,12 +42,53 @@ const BusDetails = ({ from, to, disabled, time }: BusDetailsType) => {
 
     const openDrawer = () => setIsDrawerOpen(true);
     const closeDrawer = () => setIsDrawerOpen(false);
+
     const handleAddPassenger = (event: React.FormEvent) => {
         event.preventDefault();
         const input = event.target as HTMLInputElement;
+        const emailID = input.value.trim();
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+        if (!emailPattern) {
+            notify('Invalid email address');
+            return;
+        }
+
+        if (
+            emailID !== '' &&
+            passengerDetail.length < 4 &&
+            !passengerDetail.some(p => p.emailID === emailID) &&
+            !emailID.includes(' ')
+        ) {
+            addPassenger(emailID);
+            input.value = '';
+            setIsAddingPassenger(false);
+            useOrderStore.setState(state => ({
+                ticketQuantity: state.ticketQuantity + 1
+            }));
+        }
     }
 
+    const handleRemovePassenger = (emailID: string) => {
+        removePassenger(emailID);
+        useOrderStore.setState(state => ({
+            ticketQuantity: state.ticketQuantity - 1,
+        }));
+    }
+
+    const bookTicketHandler = () => {
+        if (!isAuth) {
+            notify('Please login to book a ticket');
+            return;
+        }
+        useOrderStore.setState(state => ({
+            ...state,
+            source: from,
+            destination: to,
+            time: time
+        }));
+    }
+    
     const Details = styled(Box)`
         display: flex;
         justify-content: center;

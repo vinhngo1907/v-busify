@@ -1,5 +1,5 @@
 import { toast } from 'react-hot-toast';
-import { userAuthStore } from '../store/authStore';
+import { useAuthStore } from '../store/authStore';
 import { Navigate } from 'react-router-dom';
 import { Box, CircularProgress } from '@mui/material';
 
@@ -8,8 +8,8 @@ type UserProtectedRoutetypes = {
 };
 
 const UserProtectedRoute: React.FC<UserProtectedRoutetypes> = ({ children }) => {
-    const { isAuth, isLoading } = userAuthStore();
-    if (isLoading) {
+    const { isAuth, isloading } = useAuthStore();
+    if (isloading) {
         return (
             <Box
                 sx={{

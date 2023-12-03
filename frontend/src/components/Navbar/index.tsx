@@ -14,7 +14,7 @@ import helpIcon from '../../assets/helpIcon.svg';
 import googleIcon from '../../assets/googleIcon.svg';
 import { useScreen } from '../../customHooks/useScreen';
 import toast, { Toaster } from 'react-hot-toast';
-import { userAuthStore } from '../../store/authStore';
+import { useAuthStore } from '../../store/authStore';
 import getGoogleOAuthURL from '../../utils/getOAuthRedirectUrl';
 
 const NavbarContainer = styled(Box)`
@@ -75,7 +75,7 @@ const ManageButton = styled(Box)`
 export default function Navbar() {
 	const currentScreen = useScreen();
 	const theme = useTheme();
-	const { isAuth, user, setIsAuth, setUser } = userAuthStore();
+	const { isAuth, user, setIsAuth, setUser } = useAuthStore();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 

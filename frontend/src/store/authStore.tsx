@@ -17,7 +17,7 @@ interface User {
     role: string;
 }
 
-export const userAuthStore = create<AuthStore>(set => ({
+export const useAuthStore = create<AuthStore>(set => ({
     isAuth: false,
     user: null,
     isloading: true,

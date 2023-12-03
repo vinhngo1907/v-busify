@@ -41,7 +41,6 @@ const BusSchedule = () => {
                     container
                     justifyContent="space-between"
                     alignItems="center"
-                    lg={10}
                     sx={{
                         border: '1px solid rgba(0, 0, 0, 0.2)',
                         boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
@@ -51,7 +50,7 @@ const BusSchedule = () => {
                     }}
                 >
                     {weekDays.map((day, index) => (
-                        <Grid item xs={1.2} key={index} textAlign="center">
+                        <Grid item xs={1.2} lg={1.2} key={index} textAlign="center">
                             <Typography
                                 onClick={() => setSelectedDay(day)}
                                 sx={{
@@ -69,6 +68,7 @@ const BusSchedule = () => {
                         </Grid>
                     ))}
                 </Grid>
+
                 <Grid container direction="column" marginTop="2rem">
                     <Grid item>
                         {schedule.map((TicketData, index) => {

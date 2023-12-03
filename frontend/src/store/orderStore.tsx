@@ -17,7 +17,7 @@ interface OrderStore {
     removePassenger: (emailID: string) => void;
 }
 
-export const userOrderStore = create<OrderStore>(set => ({
+export const useOrderStore = create<OrderStore>(set => ({
     source: '',
     destination: '',
     data: '',
