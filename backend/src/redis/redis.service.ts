@@ -10,12 +10,14 @@ export class RedisService {
     constructor(private readonly appConfig: AppConfigService) {
         this.logger = new AppLoggerService(RedisService.name);
 
-        this.client = new Redis({
-            host: this.appConfig.redisConfig.host,
-            port: this.appConfig.redisConfig.port,
-            db: this.appConfig.redisConfig.db,
-            password: this.appConfig.redisConfig.password,
-        });
+        // this.client = new Redis({
+        //     host: this.appConfig.redisConfig.host,
+        //     port: this.appConfig.redisConfig.port,
+        //     db: this.appConfig.redisConfig.db,
+        //     password: this.appConfig.redisConfig.password,
+        // });
+
+        this.client = new Redis(this.appConfig.redisConfig.url);
 
         this.logger.log(`Redis connected`);
     }

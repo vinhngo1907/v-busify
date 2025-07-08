@@ -38,6 +38,38 @@ services:
       REDIS_ARGS: "--requirepass ${REDIS_PASSWORD} --loglevel warning"
     networks:
       - common
+  # MySQL Service
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "${MYSQL_PORT}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - common
+  # phpMyAdmin Service
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin_container
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - common
 
 networks:
   common:
@@ -46,3 +78,4 @@ networks:
 volumes:
   postgres_data:
   # redis_data:
+  mysql_data:

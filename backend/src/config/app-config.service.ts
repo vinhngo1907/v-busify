@@ -20,11 +20,12 @@ export class AppConfigService {
 
     get redisConfig(): RedisConfig{
         return {
-            host: this.configService.get(configKeys.REDIS_HOST),
-            port: this.configService.get(configKeys.REDIS_PORT),
-            password: this.configService.get(configKeys.REDIS_PASSWORD),
-            db: this.configService.get(configKeys.REDIS_DB),
-            ex: this.configService.get(configKeys.REDIS_EX),
+            url: process.env.REDIS_URL || 'redis://localhost:6379'
+            // host: this.configService.get(configKeys.REDIS_HOST),
+            // port: this.configService.get(configKeys.REDIS_PORT),
+            // password: this.configService.get(configKeys.REDIS_PASSWORD),
+            // db: this.configService.get(configKeys.REDIS_DB),
+            // ex: this.configService.get(configKeys.REDIS_EX),
         }
     }
 

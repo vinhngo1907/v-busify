@@ -11,6 +11,7 @@ import GoogleAuthLogin from './components/GoogleAuthLogin';
 import UserProtectedRoute from './components/ProtectedRoutes';
 import Demo from './pages/Demo';
 import ValidateAuth from './components/ValidateAuth';
+import AboutUs from './pages/AboutUs';
 
 function App() {
 	return (
@@ -24,6 +25,7 @@ function App() {
 					<Route path="/google" element={<GoogleAuthLogin />} />
 					<Route path="/bus-schedule" element={<BusSchedule />} />
 					<Route path="/bus-details" element={<BusDetails />} />
+					<Route path="/about" element={<AboutUs />} />
 					<Route
 						path="/demo-Page"
 						element={
